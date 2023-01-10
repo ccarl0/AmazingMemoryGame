@@ -14,15 +14,16 @@ public partial class MainPage : ContentPage
 
     private void CreateButtons()
     {
-        for (int i = 0; i < 9; i++)
+        int nOfCards = 16;
+        for (int i = 0; i < nOfCards; i++)
         {
             Button button = new Button();
             button.Clicked += OnButtonClicked;
             button.BackgroundColor = Colors.Gray;
             button.BindingContext = new ButtonViewModel { Id = i*2%3, Text = "Button " + i };
             
-            Grid.SetRow(button, i/3);
-            Grid.SetColumn(button, i%3);
+            Grid.SetRow(button, (int)(i /Math.Sqrt(nOfCards)));
+            Grid.SetColumn(button, (int)(i % Math.Sqrt(nOfCards)));
             mainGrid.Children.Add(button);
         }
     }
@@ -47,7 +48,6 @@ public partial class MainPage : ContentPage
             button.BackgroundColor = Colors.Red;
             CheckForMatch();
         }
-
     }
 
     private async void CheckForMatch()
