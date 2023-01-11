@@ -49,6 +49,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="CoreCLR-NCalc" Version="2.2.110" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="LandingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
