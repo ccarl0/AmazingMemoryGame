@@ -8,13 +8,16 @@ public partial class GamePage : ContentPage
 {
     List<Button> buttons = new List<Button>();
     List<Image> buttons_images = new List<Image>();
-    List<string> IDs_list = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "A", "B", "C", "D", "E", "F", "G", "H" };
+    List<string> IDs_list = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "A", "B", "C", "D", "E", "F", "G", "H" }.OrderBy(a => Guid.NewGuid()).ToList();
+    
+
      
 
     public GamePage()
     {
         InitializeComponent();
         CreateButtons();
+        
     }
     
 
@@ -59,7 +62,7 @@ public partial class GamePage : ContentPage
             // deselect the button
             buttonViewModel.IsSelected = false;
             button.BackgroundColor = Colors.Gray;
-            await backImage.ScaleTo(1, 250, Easing.CubicOut);
+            //await backImage.ScaleTo(1, 250, Easing.CubicOut);
             backImage.IsVisible = true;
         }
         else
@@ -68,7 +71,7 @@ public partial class GamePage : ContentPage
             buttonViewModel.IsSelected = true;
             button.BackgroundColor = Colors.Red;
             backImage.IsVisible = true;
-            await backImage.ScaleTo(0, 200, Easing.CubicIn);
+            //await backImage.ScaleTo(0, 200, Easing.CubicIn);
             CheckForMatch();
         }
     }
@@ -111,32 +114,94 @@ public partial class GamePage : ContentPage
                 selectedButtons[0].IsEnabled = false;
                 selectedButtons[1].IsEnabled = false;
 
-                // you can add animation here
+                CheckIfFinished();
+                //ReEnableButtons();
+                foreach (var child in mainGrid.Children)
+                {
+                    if (child is Button b)
+                    {
+                        var b_cardModel = (CardModel)b.BindingContext;
+                        if (b_cardModel.IsMatched)
+                            continue;
+                        b.IsEnabled = true;
+                    }
+                }
+
             }
             else
             {
-                
-                await Task.Delay(TimeSpan.FromSeconds(1));
+
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
                 selectedButtons[0].BackgroundColor = Colors.Gray;
                 selectedButtons[1].BackgroundColor = Colors.Gray;
                 button1.IsSelected = false;
                 button2.IsSelected = false;
 
                 mainGrid.IsEnabled = true;
+                
+                //ReEnableButtons();
+                foreach (var child in mainGrid.Children)
+                {
+                    if (child is Button b)
+                    {
+                        var b_cardModel = (CardModel)b.BindingContext;
+                        if (b_cardModel.IsMatched)
+                            continue;
+                        b.IsEnabled = true;
+                    }
+                }
 
                 await backImage1.ScaleTo(1, 250, Easing.CubicOut);
                 await backImage2.ScaleTo(1, 250, Easing.CubicOut);
 
-                
+
             }
 
-            foreach (var child in mainGrid.Children)
-            {
-                if (child is Button b)
-                    b.IsEnabled = true;
-            }
+
         }
 
+    }
+
+    private void CheckIfFinished()
+    {
+        int matchedCards = 0;
+        foreach (var child in mainGrid.Children)
+        {
+            if (child is Button b)
+            {
+                var buttonViewModel = (CardModel)b.BindingContext;
+                if (buttonViewModel.IsMatched)
+                {
+                    matchedCards++;
+                }
+            }
+        }
+        if (matchedCards == IDs_list.Count)
+        {
+            // all cards have been matched, game is finished
+            GameEnded();
+        }
+    }
+
+    //private void ReEnableButtons()
+    //{
+    //    foreach (var child in mainGrid.Children)
+    //    {
+    //        if (child is Button b)
+    //        {
+    //            var b_cardModel = (CardModel)b.BindingContext;
+    //            if (b_cardModel.IsMatched)
+    //                continue;
+    //            b.IsEnabled = true;
+    //        }
+    //    }
+    //}
+
+    private async void GameEnded()
+    {
+        await DisplayAlert("Congratulations", "You have won the game!", "OK");
+
+        await Navigation.PopAsync();
     }
 }
 
