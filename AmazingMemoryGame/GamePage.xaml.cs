@@ -9,7 +9,7 @@ public partial class GamePage : ContentPage
     List<Button> buttons = new List<Button>();
     List<Image> buttons_images = new List<Image>();
     List<string> IDs_list = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "A", "B", "C", "D", "E", "F", "G", "H" }.OrderBy(a => Guid.NewGuid()).ToList();
-    List<string> card_backs = new List<string> { "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
+    List<string> card_backs = new List<string> { "back.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
     
 
      
@@ -62,7 +62,8 @@ public partial class GamePage : ContentPage
             // deselect the button
             buttonViewModel.IsSelected = false;
             button.BackgroundColor = Colors.Gray;
-            await backImage.ScaleTo(1, 250, Easing.CubicOut);
+            await backImage.ScaleTo(1, 250);
+            //await backImage.ScaleTo(1, 250, Easing.CubicOut);
             backImage.IsVisible = true;
         }
         else
@@ -71,7 +72,8 @@ public partial class GamePage : ContentPage
             buttonViewModel.IsSelected = true;
             button.BackgroundColor = Colors.Red;
             backImage.IsVisible = true;
-            await backImage.ScaleTo(0, 250, Easing.CubicIn);
+            await backImage.ScaleTo(0, 250);
+            //await backImage.ScaleTo(0, 250, Easing.CubicIn);
             CheckForMatch();
         }
     }
@@ -149,8 +151,10 @@ public partial class GamePage : ContentPage
                         b.IsEnabled = true;
                     }
                 }
-                await backImage1.ScaleTo(1, 250, Easing.CubicOut);
-                await backImage2.ScaleTo(1, 250, Easing.CubicOut);
+                //await backImage1.ScaleTo(1, 250, Easing.CubicOut);
+                //await backImage2.ScaleTo(1, 250, Easing.CubicOut);
+                await backImage1.ScaleTo(1, 250);
+                await backImage2.ScaleTo(1, 250);
             }
         }
     }
