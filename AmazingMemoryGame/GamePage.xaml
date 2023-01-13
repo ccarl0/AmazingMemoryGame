@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AmazingMemoryGame.GamePage">
 
-    <Grid x:Name="mainGrid" Margin="5"> 
+    <Grid x:Name="mainGrid" Margin="10" BackgroundColor="#0F5257"> 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />

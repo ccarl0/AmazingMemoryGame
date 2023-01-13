@@ -8,8 +8,9 @@ public partial class GamePage : ContentPage
 {
     List<Button> buttons = new List<Button>();
     List<Image> buttons_images = new List<Image>();
+    List<Image> skins = new List<Image>();
     List<string> IDs_list = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "A", "B", "C", "D", "E", "F", "G", "H" }.OrderBy(a => Guid.NewGuid()).ToList();
-    List<string> card_backs = new List<string> { "back.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
+    List<string> card_backs = new List<string> { "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
     
 
      
@@ -17,23 +18,30 @@ public partial class GamePage : ContentPage
     public GamePage()
     {
         InitializeComponent();
-        CreateButtons();
+        Create();
     }
     
 
-    private void CreateButtons()
+    private async void Create()
     {
         int nOfCards = 16;
         for (int i = 0; i < nOfCards; i++)
         {
             Button button = new Button();
             button.Clicked += OnButtonClicked;
-            button.BackgroundColor = Colors.Gray;
+            button.BackgroundColor = Colors.Transparent;
             button.BindingContext = new CardModel { Id = IDs_list[i], Text = $"Button {i}", Index=i};
 
             Image backImage = new Image();
-            backImage.Source = card_backs[i];
+            backImage.Source = card_backs[i];            
             backImage.InputTransparent = true;
+
+            Image skin = new Image();
+            skin.Source = $"Images/{IDs_list[i]}.svg";
+            skin.IsVisible = true;
+            await skin.ScaleTo(0, 250);
+            //skin.IsVisible = false;
+
 
             Grid.SetRow(button, (int)(i /Math.Sqrt(nOfCards)));
             Grid.SetColumn(button, (int)(i % Math.Sqrt(nOfCards)));
@@ -41,11 +49,15 @@ public partial class GamePage : ContentPage
             Grid.SetRow(backImage, (int)(i /Math.Sqrt(nOfCards)));
             Grid.SetColumn(backImage, (int)(i % Math.Sqrt(nOfCards)));
 
+            Grid.SetRow(skin, (int)(i / Math.Sqrt(nOfCards)));
+            Grid.SetColumn(skin, (int)(i % Math.Sqrt(nOfCards)));
+
             mainGrid.Children.Add(button);
             mainGrid.Children.Add(backImage);
 
             buttons.Add(button);
             buttons_images.Add(backImage);
+            skins.Add(skin);
         }
     }
 
@@ -61,7 +73,7 @@ public partial class GamePage : ContentPage
         {
             // deselect the button
             buttonViewModel.IsSelected = false;
-            button.BackgroundColor = Colors.Gray;
+            button.BackgroundColor = Colors.Transparent;
             await backImage.ScaleTo(1, 250);
             //await backImage.ScaleTo(1, 250, Easing.CubicOut);
             backImage.IsVisible = true;
@@ -70,7 +82,7 @@ public partial class GamePage : ContentPage
         {
             // select the button
             buttonViewModel.IsSelected = true;
-            button.BackgroundColor = Colors.Red;
+            button.BackgroundColor = Colors.CadetBlue;
             backImage.IsVisible = true;
             await backImage.ScaleTo(0, 250);
             //await backImage.ScaleTo(0, 250, Easing.CubicIn);
@@ -85,7 +97,7 @@ public partial class GamePage : ContentPage
         //get all the selected button
         foreach (var child in mainGrid.Children)
         {
-            if (child is Button b && b.BackgroundColor == Colors.Red)
+            if (child is Button b && b.BackgroundColor == Colors.CadetBlue)
             {
                 selectedButtons.Add(b);
             }
@@ -133,8 +145,8 @@ public partial class GamePage : ContentPage
             {
 
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
-                selectedButtons[0].BackgroundColor = Colors.Gray;
-                selectedButtons[1].BackgroundColor = Colors.Gray;
+                selectedButtons[0].BackgroundColor = Colors.Transparent;
+                selectedButtons[1].BackgroundColor = Colors.Transparent;
                 button1.IsSelected = false;
                 button2.IsSelected = false;
 
