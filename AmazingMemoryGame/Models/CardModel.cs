@@ -14,7 +14,7 @@ namespace AmazingMemoryGame.Models
         public bool IsSelected { get; set; }
         public bool IsMatched { get; set; }
         public bool BindingContext { get; set; }
-
+        public string image_path { get; set; }
 
     }
 
