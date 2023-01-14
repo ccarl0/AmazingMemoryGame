@@ -9,7 +9,7 @@ public partial class GamePage : ContentPage
     List<Button> buttons = new List<Button>();
     List<Image> buttons_images = new List<Image>();
     List<Image> skins = new List<Image>();
-    List<string> IDs_list = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "a", "b", "c", "d", "e", "f", "g", "h"}.OrderBy(a => Guid.NewGuid()).ToList();
+    List<string> IDs_list = new List<string> { "hundred_fish.png", "dice_hand.png", "dotnet_bot.png", "t_skin.png", "e", "f", "g", "h", "hundred_fish.png", "dice_hand.png", "dotnet_bot.png", "t_skin.png", "e", "f", "g", "h"}.OrderBy(a => Guid.NewGuid()).ToList();
     List<string> card_backs = new List<string> { "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
     //List<string> card_backs = new List<string> { "dice_six.png", "dice_one.png", "dices.png", "hundred_fish.png", "dice_hand.png", "ace_card.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
 
@@ -39,7 +39,7 @@ public partial class GamePage : ContentPage
             backImage.InputTransparent = true;
 
             Image skin = new Image();
-            skin.Source = $"amazon-color-svgrepo.com.png";
+            skin.Source = IDs_list[i];
             skin.IsVisible = true;
             await skin.ScaleTo(0, 250);
             //skin.IsVisible = false;
