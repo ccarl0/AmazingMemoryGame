@@ -9,11 +9,12 @@ public partial class GamePage : ContentPage
     List<Button> buttons = new List<Button>();
     List<Image> buttons_images = new List<Image>();
     List<Image> skins = new List<Image>();
-    List<string> IDs_list = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "A", "B", "C", "D", "E", "F", "G", "H" }.OrderBy(a => Guid.NewGuid()).ToList();
+    List<string> IDs_list = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "a", "b", "c", "d", "e", "f", "g", "h"}.OrderBy(a => Guid.NewGuid()).ToList();
     List<string> card_backs = new List<string> { "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_clubs.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
-    
+    //List<string> card_backs = new List<string> { "dice_six.png", "dice_one.png", "dices.png", "hundred_fish.png", "dice_hand.png", "ace_card.png", "back_card_diamond.png", "back_card_diamond.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_heart.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png", "back_card_spades.png" }.OrderBy(a => Guid.NewGuid()).ToList();
 
-     
+
+
 
     public GamePage()
     {
@@ -33,11 +34,12 @@ public partial class GamePage : ContentPage
             button.BindingContext = new CardModel { Id = IDs_list[i], Text = $"Button {i}", Index=i};
 
             Image backImage = new Image();
-            backImage.Source = card_backs[i];            
+            backImage.Source = card_backs[i];
+            //backImage.Source = "dotnet_bot.png";
             backImage.InputTransparent = true;
 
             Image skin = new Image();
-            skin.Source = $"Images/{IDs_list[i]}.svg";
+            skin.Source = $"amazon-color-svgrepo.com.png";
             skin.IsVisible = true;
             await skin.ScaleTo(0, 250);
             //skin.IsVisible = false;
@@ -54,6 +56,7 @@ public partial class GamePage : ContentPage
 
             mainGrid.Children.Add(button);
             mainGrid.Children.Add(backImage);
+            mainGrid.Children.Add(skin);
 
             buttons.Add(button);
             buttons_images.Add(backImage);
@@ -68,13 +71,17 @@ public partial class GamePage : ContentPage
         var buttonViewModel = (CardModel)button.BindingContext;
         
         Image backImage = (Image)buttons_images[buttonViewModel.Index];
+        Image skin = (Image)skins[buttonViewModel.Index];
         // check if the button is already selected
         if (buttonViewModel.IsSelected)
         {
             // deselect the button
             buttonViewModel.IsSelected = false;
             button.BackgroundColor = Colors.Transparent;
-            await backImage.ScaleTo(1, 250);
+            
+            await skin.ScaleTo(0, 150);
+            await backImage.ScaleTo(1, 150);
+
             //await backImage.ScaleTo(1, 250, Easing.CubicOut);
             backImage.IsVisible = true;
         }
@@ -84,7 +91,8 @@ public partial class GamePage : ContentPage
             buttonViewModel.IsSelected = true;
             button.BackgroundColor = Colors.CadetBlue;
             backImage.IsVisible = true;
-            await backImage.ScaleTo(0, 250);
+            await backImage.ScaleTo(0, 150);
+            await skin.ScaleTo(1, 150);
             //await backImage.ScaleTo(0, 250, Easing.CubicIn);
             CheckForMatch();
         }
@@ -117,12 +125,16 @@ public partial class GamePage : ContentPage
             Image backImage1 = (Image)buttons_images[button1.Index];
             Image backImage2 = (Image)buttons_images[button2.Index];
 
+            Image skin1 = (Image)skins[button1.Index];
+            Image skin2 = (Image)skins[button2.Index];
+
+
             if (button1.Id == button2.Id)
             {
                 button1.IsMatched = true;
                 button2.IsMatched = true;
-                selectedButtons[0].BackgroundColor= Colors.Violet;
-                selectedButtons[1].BackgroundColor= Colors.Violet;
+                selectedButtons[0].BackgroundColor= Color.FromRgba("#044665");
+                selectedButtons[1].BackgroundColor= Color.FromRgba("#044665");
                 selectedButtons[0].Opacity = 20;
                 selectedButtons[1].Opacity = 20;
                 selectedButtons[0].IsEnabled = false;
@@ -165,8 +177,10 @@ public partial class GamePage : ContentPage
                 }
                 //await backImage1.ScaleTo(1, 250, Easing.CubicOut);
                 //await backImage2.ScaleTo(1, 250, Easing.CubicOut);
-                await backImage1.ScaleTo(1, 250);
-                await backImage2.ScaleTo(1, 250);
+                await skin1.ScaleTo(0, 150);
+                await skin2.ScaleTo(0, 150);
+                await backImage1.ScaleTo(1, 150);
+                await backImage2.ScaleTo(1, 150);
             }
         }
     }

@@ -38,14 +38,34 @@
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
-		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AndroidResource Remove="Resources\Images\skins\**" />
+	  <Compile Remove="Resources\Images\skins\**" />
+	  <EmbeddedResource Remove="Resources\Images\skins\**" />
+	  <MauiCss Remove="Resources\Images\skins\**" />
+	  <MauiXaml Remove="Resources\Images\skins\**" />
+	  <None Remove="Resources\Images\skins\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Images\a.svg" />
+	  <None Remove="Resources\Images\b.svg" />
+	  <None Remove="Resources\Images\back_card_spades.svg" />
+	  <None Remove="Resources\Images\c.svg" />
+	  <None Remove="Resources\Images\d.svg" />
+	  <None Remove="Resources\Images\dice_hand.svg" />
+	  <None Remove="Resources\Images\e.svg" />
+	  <None Remove="Resources\Images\f.svg" />
+	  <None Remove="Resources\Images\g.svg" />
+	  <None Remove="Resources\Images\h.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -62,6 +82,10 @@
 	  <Compile Update="GamePage.xaml.cs">
 	    <DependentUpon>GamePage.xaml</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\back_card_spades.svg" />
 	</ItemGroup>
 
 </Project>
