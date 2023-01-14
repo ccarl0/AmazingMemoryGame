@@ -48,12 +48,7 @@
 
 	
 
-	<ItemGroup>
-	  <None Remove="Resources\Images\back_card_spades.svg" />
-	  <None Remove="Resources\Images\hundred_fish.svg" />
-	  <None Remove="Resources\Images\t_skin.svg" />
-		
-	</ItemGroup>
+	
 
 	<ItemGroup>
 	  <PackageReference Include="CoreCLR-NCalc" Version="2.2.110" />
@@ -71,8 +66,6 @@
 	  </Compile>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <MauiImage Include="Resources\Images\back_card_spades.svg" />
-	</ItemGroup>
+	
 
 </Project>
